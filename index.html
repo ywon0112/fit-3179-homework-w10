@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FIT3179 - Week 9 Homework</title>
+    <!-- These three script tags are required to load Vega-Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+    <h1>Average Annual Rainfall in Australian Cities</h1>
+    <p>This dashboard combines the Week 9 map with a new interactive comparison chart to explore rainfall across Australia.</p>
+
+    <section>
+        <h2>Map Overview</h2>
+        <div id="vis-map"></div>
+    </section>
+
+    <section>
+        <h2>City Comparison</h2>
+        <div id="vis-task1"></div>
+    </section>
+
+    <script>
+        vegaEmbed('#vis-map', 'js/spec.json').catch(console.error);
+        vegaEmbed('#vis-task1', 'js/spec-task1.json').catch(console.error);
+    </script>
+</body>
+</html>

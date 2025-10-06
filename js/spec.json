@@ -1,0 +1,89 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Average Annual Rainfall in Australian Cities",
+    "subtitle": "Data from weather stations (2007-2017)"
+  },
+  "width": 800,
+  "height": 600,
+  "background": "#e6f3ff",
+  
+  "layer": [
+    {
+      "projection": {
+        "type": "mercator"
+      },
+      "data": {
+        "url": "data/australian-states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "white",
+        "stroke": "gray"
+      }
+    },
+    
+    {
+      "data": {
+        "url": "data/rainfall_by_city.csv"
+      },
+      "mark": "circle",
+      "encoding": {
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {
+          "field": "average_annual_rainfall",
+          "type": "quantitative",
+          "title": "Avg. Annual Rainfall (mm)",
+          "scale": {"range": [10, 1000]},
+          "legend": {"orient": "top-right"}
+        },
+        "color": {
+          "field": "average_annual_rainfall",
+          "type": "quantitative",
+          "scale": {"scheme": "blues"},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "Location", "type": "nominal"},
+          {
+            "field": "average_annual_rainfall",
+            "type": "quantitative",
+            "title": "Rainfall (mm)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"state": "WA", "longitude": 122, "latitude": -25},
+          {"state": "NT", "longitude": 133, "latitude": -19},
+          {"state": "SA", "longitude": 135, "latitude": -30},
+          {"state": "QLD", "longitude": 145, "latitude": -23},
+          {"state": "NSW", "longitude": 147, "latitude": -33},
+          {"state": "VIC", "longitude": 145, "latitude": -37},
+          {"state": "TAS", "longitude": 147, "latitude": -42}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "#4A4A4A",
+        "opacity": 0.6
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "state", "type": "nominal"}
+      }
+    }
+  ]
+}

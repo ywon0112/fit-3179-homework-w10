@@ -1,0 +1,219 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Average Rainfall by City",
+    "subtitle": "Filter by state to compare city rainfall (2007-2017)"
+  },
+  "data": {
+    "url": "data/rainfall_by_city.csv"
+  },
+  "width": 600,
+  "height": 500,
+  "background": "#f7f9fc",
+  "params": [
+    {
+      "name": "stateSelection",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "Filter by state: ",
+        "options": [
+          "All",
+          "ACT",
+          "NSW",
+          "NT",
+          "QLD",
+          "SA",
+          "TAS",
+          "VIC",
+          "WA"
+        ]
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "stateSelection == 'All' || datum.State == stateSelection"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "Location",
+          "type": "nominal",
+          "sort": "-x",
+          "axis": {
+            "title": null,
+            "labelLimit": 140
+          }
+        },
+        "x": {
+          "field": "average_annual_rainfall",
+          "type": "quantitative",
+          "title": "Average annual rainfall (mm)",
+          "axis": {
+            "tickCount": 6
+          }
+        },
+        "color": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State",
+          "scale": {
+            "scheme": "tableau20"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Location",
+            "type": "nominal",
+            "title": "City"
+          },
+          {
+            "field": "State",
+            "type": "nominal"
+          },
+          {
+            "field": "average_annual_rainfall",
+            "type": "quantitative",
+            "title": "Rainfall",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "average_annual_rainfall",
+              "as": "meanRainfall"
+            }
+          ]
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#d62728",
+        "strokeDash": [6, 4],
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "meanRainfall",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "average_annual_rainfall",
+              "as": "meanRainfall"
+            }
+          ]
+        },
+        {
+          "calculate": "'National average: ' + format(datum.meanRainfall, '.0f') + ' mm'",
+          "as": "annotation"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 5,
+        "dy": -6,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#d62728"
+      },
+      "encoding": {
+        "x": {
+          "field": "meanRainfall",
+          "type": "quantitative"
+        },
+        "y": {
+          "value": -5
+        },
+        "text": {
+          "field": "annotation",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "window": [
+            {
+              "op": "rank",
+              "as": "rainfall_rank"
+            }
+          ],
+          "sort": [
+            {
+              "field": "average_annual_rainfall",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum.rainfall_rank == 1"
+        },
+        {
+          "calculate": "'Highest rainfall: ' + datum.Location",
+          "as": "topAnnotation"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 6,
+        "dy": -10,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#1f77b4"
+      },
+      "encoding": {
+        "x": {
+          "field": "average_annual_rainfall",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "Location",
+          "type": "nominal"
+        },
+        "text": {
+          "field": "topAnnotation",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "legend": {
+      "titleFontSize": 12,
+      "labelFontSize": 11
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}
+
