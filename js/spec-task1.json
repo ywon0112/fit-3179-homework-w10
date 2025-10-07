@@ -17,6 +17,7 @@
       "bind": {
         "input": "select",
         "name": "Filter by state: ",
+        "element": "#state-filter-control",
         "options": [
           "All",
           "ACT",
