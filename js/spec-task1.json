@@ -211,16 +211,16 @@
           "as": "topAnnotation"
         },
         {
-          "calculate": "datum.Rainfall - 80",
+          "calculate": "datum.Rainfall / 2",
           "as": "topAnnotationX"
         }
       ],
       "mark": {
         "type": "text",
-        "align": "right",
+        "align": "center",
         "baseline": "middle",
-        "dx": -6,
-        "dy": -10,
+        "dx": 0,
+        "dy": -14,
         "fontSize": 11,
         "fontWeight": "bold",
         "color": "#2c3e7f"
