@@ -16,7 +16,7 @@
       "value": "All",
       "bind": {
         "input": "select",
-        "name": "Filter by state: ",
+        "name": "",
         "element": "#state-filter-control",
         "options": [
           "All",
@@ -28,6 +28,17 @@
           "TAS",
           "VIC",
           "WA"
+        ],
+        "labels": [
+          "All states",
+          "Australian Capital Territory",
+          "New South Wales",
+          "Northern Territory",
+          "Queensland",
+          "South Australia",
+          "Tasmania",
+          "Victoria",
+          "Western Australia"
         ]
       }
     }
