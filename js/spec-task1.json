@@ -116,8 +116,8 @@
           {
             "field": "Rainfall",
             "type": "quantitative",
-            "title": "Rainfall",
-            "format": ".1f"
+            "title": "Rainfall (mm)",
+            "format": ",.1f"
           }
         ]
       }

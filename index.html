@@ -31,14 +31,19 @@
 
     <script>
         vegaEmbed('#vis-map', 'js/spec.json').catch(console.error);
-        vegaEmbed('#vis-task1', 'js/spec-task1.json')
-            .then(() => {
-                const select = document.querySelector('#state-filter-control select');
-                if (select) {
-                    select.setAttribute('aria-label', 'State filter');
-                }
-            })
-            .catch(console.error);
+        
+        vegaEmbed('#vis-task1', 'js/spec-task1.json', {
+            tooltip: {
+                theme: 'custom'
+            }
+        })
+        .then(() => {
+            const select = document.querySelector('#state-filter-control select');
+            if (select) {
+                select.setAttribute('aria-label', 'State filter');
+            }
+        })
+        .catch(console.error);
     </script>
 
     <style>
@@ -104,6 +109,33 @@
             padding: 1rem;
             border-radius: 12px;
             box-shadow: 0 6px 16px rgba(31, 42, 68, 0.12);
+        }
+
+        /* Custom tooltip styling with bold values */
+        #vg-tooltip-element.vg-tooltip.custom-theme {
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 13px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #vg-tooltip-element.vg-tooltip.custom-theme .key {
+            font-weight: 400;
+            color: #333;
+            margin-right: 4px;
+        }
+
+        #vg-tooltip-element.vg-tooltip.custom-theme .value {
+            font-weight: 700;
+            color: #000;
+        }
+
+        #vg-tooltip-element.vg-tooltip.custom-theme td.key,
+        #vg-tooltip-element.vg-tooltip.custom-theme td.value {
+            padding: 2px 4px;
         }
     </style>
 </body>
