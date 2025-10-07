@@ -41,6 +41,10 @@
       "as": "CityState"
     },
     {
+      "calculate": "({'ACT': 'Australian Capital Territory', 'NSW': 'New South Wales', 'NT': 'Northern Territory', 'QLD': 'Queensland', 'SA': 'South Australia', 'TAS': 'Tasmania', 'VIC': 'Victoria', 'WA': 'Western Australia'})[datum.State]",
+      "as": "StateFull"
+    },
+    {
       "calculate": "toNumber(datum.average_annual_rainfall)",
       "as": "Rainfall"
     }
@@ -94,8 +98,9 @@
             "title": "City"
           },
           {
-            "field": "State",
-            "type": "nominal"
+            "field": "StateFull",
+            "type": "nominal",
+            "title": "State"
           },
           {
             "field": "Rainfall",
@@ -191,7 +196,7 @@
           "filter": "datum.rainfall_rank == 1"
         },
         {
-          "calculate": "'Highest rainfall: ' + datum.Location",
+          "calculate": "'Highest rainfall: ' + datum.Location + ' (' + datum.StateFull + ')'",
           "as": "topAnnotation"
         },
         {
