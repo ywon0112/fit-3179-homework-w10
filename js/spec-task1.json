@@ -35,6 +35,14 @@
   "transform": [
     {
       "filter": "stateSelection == 'All' || datum.State == stateSelection"
+    },
+    {
+      "calculate": "datum.Location + ', ' + datum.State",
+      "as": "CityState"
+    },
+    {
+      "calculate": "toNumber(datum.average_annual_rainfall)",
+      "as": "Rainfall"
     }
   ],
   "layer": [
@@ -45,7 +53,7 @@
       },
       "encoding": {
         "y": {
-          "field": "Location",
+          "field": "CityState",
           "type": "nominal",
           "sort": "-x",
           "axis": {
@@ -54,7 +62,7 @@
           }
         },
         "x": {
-          "field": "average_annual_rainfall",
+          "field": "Rainfall",
           "type": "quantitative",
           "title": "Average annual rainfall (mm)",
           "axis": {
@@ -66,7 +74,17 @@
           "type": "nominal",
           "title": "State",
           "scale": {
-            "scheme": "tableau20"
+            "domain": ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"],
+            "range": [
+              "#1f77b4",
+              "#9467bd",
+              "#8c564b",
+              "#17becf",
+              "#ff7f0e",
+              "#7f7f7f",
+              "#bc80bd",
+              "#393b79"
+            ]
           }
         },
         "tooltip": [
@@ -80,7 +98,7 @@
             "type": "nominal"
           },
           {
-            "field": "average_annual_rainfall",
+            "field": "Rainfall",
             "type": "quantitative",
             "title": "Rainfall",
             "format": ".1f"
@@ -94,7 +112,7 @@
           "aggregate": [
             {
               "op": "mean",
-              "field": "average_annual_rainfall",
+              "field": "Rainfall",
               "as": "meanRainfall"
             }
           ]
@@ -102,7 +120,7 @@
       ],
       "mark": {
         "type": "rule",
-        "color": "#d62728",
+        "color": "#5b5be0",
         "strokeDash": [6, 4],
         "strokeWidth": 2
       },
@@ -119,7 +137,7 @@
           "aggregate": [
             {
               "op": "mean",
-              "field": "average_annual_rainfall",
+              "field": "Rainfall",
               "as": "meanRainfall"
             }
           ]
@@ -137,7 +155,7 @@
         "dy": -6,
         "fontSize": 12,
         "fontWeight": "bold",
-        "color": "#d62728"
+        "color": "#5b5be0"
       },
       "encoding": {
         "x": {
@@ -164,7 +182,7 @@
           ],
           "sort": [
             {
-              "field": "average_annual_rainfall",
+              "field": "Rainfall",
               "order": "descending"
             }
           ]
@@ -175,25 +193,29 @@
         {
           "calculate": "'Highest rainfall: ' + datum.Location",
           "as": "topAnnotation"
+        },
+        {
+          "calculate": "datum.Rainfall - 80",
+          "as": "topAnnotationX"
         }
       ],
       "mark": {
         "type": "text",
-        "align": "left",
+        "align": "right",
         "baseline": "middle",
-        "dx": 6,
+        "dx": -6,
         "dy": -10,
         "fontSize": 11,
         "fontWeight": "bold",
-        "color": "#1f77b4"
+        "color": "#2c3e7f"
       },
       "encoding": {
         "x": {
-          "field": "average_annual_rainfall",
+          "field": "topAnnotationX",
           "type": "quantitative"
         },
         "y": {
-          "field": "Location",
+          "field": "CityState",
           "type": "nominal"
         },
         "text": {
